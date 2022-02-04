@@ -1,12 +1,12 @@
 <?php
     $list = "
     <ul>
-        <li><a href='./index.php'>Home</a></li>
+        <li><a href='.'>Home</a></li>
     </ul>
     ";
 
-    $username = isset($_POST['username']) ? $_POST['username'] : '';
-    $password = isset($_POST['password']) ? $_POST['password'] : '';
+    $username = isset($_POST['username']) ? htmlentities($_POST['username'], ENT_QUOTES) : '';
+    $password = isset($_POST['password']) ? htmlentities($_POST['password'], ENT_QUOTES) : '';
     $form = "
     <form method='post'>
     <div><label for='username'>Username:</label></div>
