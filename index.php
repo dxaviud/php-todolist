@@ -6,5 +6,7 @@
     </ul>
     ";
 
+    $form = "";
+
     require 'templates/base.php';
 ?>
