@@ -5,9 +5,10 @@
     </ul>
     ";
 
-    $username = isset($_POST['username']) ? htmlentities($_POST['username'], ENT_QUOTES) : '';
-    $email = isset($_POST['email']) ? htmlentities($_POST['email'], ENT_QUOTES) : '';
-    $password = isset($_POST['password']) ? htmlentities($_POST['password'], ENT_QUOTES) : '';
+    require 'util.php';
+    $username = sanitize_POST('username');
+    $email = sanitize_POST('email');
+    $password = sanitize_POST('password');
     $form = "
     <form method='post'>
     <div><label for='username'>Username:</label></div>
