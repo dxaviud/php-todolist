@@ -31,7 +31,7 @@
     </ul>";
 
     $todotitle = isset($_POST['todotitle']) ? htmlentities($_POST['todotitle']) : '';
-    $tododescription = isset($_POST['tododescription']) ? htmlentities($_POST['todotitle']) : '';
+    $tododescription = isset($_POST['tododescription']) ? htmlentities($_POST['tododescription']) : '';
     $form = "
     <form method='post' id='newtodoitem'>
     <div>Add a new todo item:</div>
