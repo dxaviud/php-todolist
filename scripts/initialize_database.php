@@ -14,7 +14,7 @@
 
     echo "Created table users\n";
 
-    $query = 'CREATE TABLE IF NOT EXISTS todoitems(
+    $query = 'CREATE TABLE IF NOT EXISTS todos(
         id SERIAL PRIMARY KEY, 
         title VARCHAR(150) NOT NULL, 
         description TEXT, 
@@ -22,7 +22,7 @@
     );';
     pg_query($connection, $query) or die('Query failed: ' . pg_last_error());
     
-    echo "Created table todoitems\n";
+    echo "Created table todos\n";
 
     pg_close($connection);
 ?>
