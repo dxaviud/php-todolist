@@ -66,12 +66,6 @@
         array_push($todos, "<li><a href=''>" . htmlentities($row[0]) . "</a></li>");
     }
 
-    // $todos = array(
-    //     "<li><a href=''>Learn PHP</a></li>",
-    //     "<li><a href=''>Learn Laravel</a></li>",
-    //     "<li><a href=''>Learn Python</a></li>",
-    //     "<li><a href=''>Learn Django</a></li>"
-    // );
     $todolist = implode('', $todos);
     if (!$todolist) {
         $todolist = "<li>You don't have any todos yet. Add one below!</li>";
