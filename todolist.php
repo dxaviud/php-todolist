@@ -15,9 +15,15 @@
         unset($_SESSION['tododescription']);
 
         require "constants.php";
+        // get user_id
         $connection = pg_connect(constant("CONNECTION_STRING")) or die('Could not connect: ' . pg_last_error());
-        $query = 'SELECT * FROM todos WHERE title = $1';
-        $params = array($todotitle);
+        $query = 'SELECT id FROM users WHERE username = $1';
+        $params = array($_SESSION['username']);
+        $result = pg_query_params($connection, $query, $params) or die('Query failed: ' . pg_last_error());
+        $user_id = pg_fetch_result($result, 0, 'id');
+
+        $query = 'SELECT * FROM todos WHERE title = $1 AND user_id = $2';
+        $params = array($todotitle, $user_id);
         $result = pg_query_params($connection, $query, $params) or die('Query failed: ' . pg_last_error());
 
         if (pg_num_rows($result) > 0) {
@@ -32,13 +38,6 @@
         } else {
             // signup
 
-            // get user_id
-            $query = 'SELECT id FROM users WHERE username = $1';
-            $params = array($_SESSION['username']);
-            $result = pg_query_params($connection, $query, $params) or die('Query failed: ' . pg_last_error());
-            $user_id = pg_fetch_result($result, 0, 'id');
-
-            // insert todo
             $query = 'INSERT INTO todos (title, description, user_id) VALUES ($1, $2, $3)';
             $params = array($todotitle, $tododescription, $user_id);
             $result = pg_query_params($connection, $query, $params) or die('Query failed: ' . pg_last_error());
