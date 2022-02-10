@@ -45,6 +45,8 @@
             pg_close($connection);
 
             $_SESSION['success'] = "Todo added successfully!";
+            unset($_SESSION['todotitle']);
+            unset($_SESSION['tododescription']);
             header("Location: todolist.php");
             return;
         }
@@ -82,6 +84,7 @@
     <h2 style='color: green'>$success</h2>
     <ul>
         <li><a href='logout.php'>Logout</a></li>
+        <li><a href='delete_account.php' style='color: red'>Delete account</a></li>
     </ul>
     <h3>Your todolist:</h3>
     <ul>
@@ -97,9 +100,9 @@
     <form method='post' id='newtodoitem'>
     <div>Add a new todo:</div>
     <div><label for='todotitle'>Title:</label></div>
-    <input type='text' name='todotitle' id='todotitle' value='$todotitle' />
+    <input type='text' name='todotitle' id='todotitle' value='$todotitle' required/>
     <div><label for='tododescription'>Description:</label></div>
-    <textarea name='tododescription' id='tododescription' form='newtodoitem' rows=6 cols=25>$tododescription</textarea>
+    <textarea name='tododescription' id='tododescription' form='newtodoitem' rows=6 cols=25 required>$tododescription</textarea>
     <input type='submit' />
     </form>";
 
