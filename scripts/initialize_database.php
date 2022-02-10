@@ -18,7 +18,7 @@
         id SERIAL PRIMARY KEY, 
         title VARCHAR(150) NOT NULL, 
         description TEXT, 
-        user_id INTEGER REFERENCES users (id)
+        user_id INTEGER REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
     );';
     pg_query($connection, $query) or die('Query failed: ' . pg_last_error());
     
