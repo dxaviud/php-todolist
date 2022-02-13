@@ -10,11 +10,10 @@
 
     if ($todotitle && $tododescription) {
         // attempt to add this todo
-
         unset($_SESSION['todotitle']);
         unset($_SESSION['tododescription']);
 
-        require "constants.php";
+        require "../src/constants.php";
         // get user_id
         $connection = pg_connect(constant("CONNECTION_STRING")) or die('Could not connect: ' . pg_last_error());
         $query = 'SELECT id FROM users WHERE username = $1';
@@ -51,7 +50,7 @@
         }
     }
 
-    require "constants.php";
+    require "../src/constants.php";
     // get user_id
     $connection = pg_connect(constant("CONNECTION_STRING")) or die('Could not connect: ' . pg_last_error());
     $query = 'SELECT id FROM users WHERE username = $1';
@@ -72,8 +71,8 @@
         $todolist = "<li>You don't have any todos yet. Add one below!</li>";
     }
 
-    $success = isset($_SESSION['success']) ? $_SESSION['success'] : '';
-    unset($_SESSION['success']);
+    require '../src/flash.php';
+    $success = flash_success();
     if (strlen($success) === 0) {
         $username = htmlentities($_SESSION['username']);
         $success = "Welcome, $username!";
@@ -90,8 +89,10 @@
     $todolist
     </ul>";
 
-    $error = isset($_SESSION['error']) ? "<p style='color: red'>" . $_SESSION['error'] . "</p>" : '';
-    unset($_SESSION['error']);
+    $error = flash_error();
+    if ($error) {
+        $error = "<p style='color: red'>" . $error . "</p>";
+    }
     $todotitle = isset($_SESSION['todotitle']) ? htmlentities($_SESSION['todotitle']) : '';
     $tododescription = isset($_SESSION['tododescription']) ? htmlentities($_SESSION['tododescription']) : '';
 
@@ -105,5 +106,7 @@
     <input type='submit' />
     </form>";
 
-    require 'templates/base.php';
+    $script = '';
+
+    require '../templates/base.php';
 ?>

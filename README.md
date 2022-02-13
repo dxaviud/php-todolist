@@ -18,5 +18,8 @@
 
 ## Run
 
-`php -c "$PHPRC" -S localhost:8080`
+```bash
+cd public
+php -c "$PHPRC" -S localhost:8080
+```
 
