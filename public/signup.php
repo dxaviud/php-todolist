@@ -12,7 +12,7 @@
     if ($username && $email && $password) {
         // attempt signup
 
-        require "constants.php";
+        require "../src/constants.php";
         $connection = pg_connect(constant("CONNECTION_STRING")) or die('Could not connect: ' . pg_last_error());
         $query = 'SELECT * FROM users WHERE username = $1';
         $params = array($username);
@@ -47,8 +47,11 @@
     </ul>
     ";
 
-    $error = isset($_SESSION['error']) ? "<p style='color: red'>" . $_SESSION['error'] . "</p>" : '';
-    unset($_SESSION['error']);
+    require '../src/flash.php';
+    $error = flash_error();
+    if ($error) {
+        $error = '<p style="color: red">' . $error . '</p>';
+    }
 
     $form = $error . "
     <form method='post'>
@@ -61,5 +64,7 @@
     <input type='submit' />
     </form>";
 
-    require 'templates/base.php';
+    $script = '';
+
+    require '../templates/base.php';
 ?>
