@@ -13,7 +13,7 @@ if ($username && $email && $password) {
     // attempt signup
 
     require "../src/constants.php";
-    $connection = pg_connect(constant("CONNECTION_STRING")) or die('Could not connect: ' . pg_last_error());
+    $connection = pg_connect(CONNECTION_STRING) or die('Could not connect: ' . pg_last_error());
     $query = 'SELECT * FROM users WHERE username = $1';
     $params = array($username);
     $result = pg_query_params($connection, $query, $params) or die('Query failed: ' . pg_last_error());

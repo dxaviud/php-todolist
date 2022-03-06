@@ -18,7 +18,9 @@ function log_error($message)
 
 function _log_with_severity($message, $severity)
 {
-    mkdir("../logs"); // fopen fails if any directories in the path don't exist
+    if (!file_exists('../logs')) {
+        mkdir("../logs"); // fopen fails if any directories in the path don't exist
+    }
     $filepath = '../logs/' . date('Y-m-d') . '.log';
     $file = fopen($filepath, 'a') or die("can't open file");
     fwrite($file, '[' . $severity . ']: ' . $message . "\n");
