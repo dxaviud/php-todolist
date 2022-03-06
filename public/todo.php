@@ -12,6 +12,7 @@ $query = 'SELECT id FROM users WHERE username = $1';
 $params = array($_SESSION['username']);
 $result = pg_query_params($connection, $query, $params) or die('Query failed: ' . pg_last_error());
 $user_id = pg_fetch_result($result, 0, 'id');
+$_SESSION['user_id'] = $user_id;
 
 // get todo
 if (!isset($_GET['todo_id'])) {
@@ -32,6 +33,7 @@ if (!$todo) {
 $list = "
     <ul>
         <li><a href='todolist.php'>Todolist</a></li>
+        <li><a style='color: red' href='delete_todo.php?todo_id=$todo_id'>Delete todo</a></li>
     </ul>
     ";
 

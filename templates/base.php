@@ -15,3 +15,4 @@ require_once '../src/constants.php';
     <?=$script?>
 </body>
 </html>
+
