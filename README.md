@@ -4,22 +4,14 @@
 
 1. Install PostgreSQL and create user `postgres` with password `postgres`
 
-2. Create `php-todolist` database in postgres (`createdb -U postgres php-todolist`)
+2. Create `php-todolist` PostgreSQL database with `postgres` user (`createdb php-todolist` works if you have the PGUSER and PGPASSWORD environment variables both set to `postgres`)
 
-3. In php.ini-development:
-    - uncomment `extension=pgsql`
-    - set `extension_dir` properly (`extension_dir = "ext"` on windows)
+3. In php.ini-development, set `extension_dir` properly (`extension_dir = "ext"` on windows)
 
-4. Set environment variable `PHPRC="<path/to/php.ini-development>"` in `~/.bashrc` or similar
-
-5. Restart shell (or run `source ~/.bashrc` if using bash)
-
-6. Create tables (`php -c "$PHPRC" scripts/initialize_database.php`)
+4. Run migrations (`./migrations.sh`)
 
 ## Run
 
 ```bash
-cd public
-php -c "$PHPRC" -S localhost:8080
+./dev.sh
 ```
-
