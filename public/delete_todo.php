@@ -6,7 +6,6 @@ if (!isset($_SESSION['username'])) { // not logged in, redirect to index
 }
 
 if (!isset($_GET['todo_id'])) {
-    $_SESSION['error'] = "Todo not found";
     header("Location: todolist.php");
     return;
 }
