@@ -33,6 +33,7 @@ if (!$todo) {
 $list = "
     <ul>
         <li><a href='todolist.php'>Todolist</a></li>
+        <li><a href='edit_todo.php?todo_id=$todo_id'>Edit todo</a></li>
         <li><a style='color: red' href='delete_todo.php?todo_id=$todo_id'>Delete todo</a></li>
     </ul>
     ";
@@ -40,7 +41,13 @@ $list = "
 $todotitle = $todo[0];
 $tododescription = $todo[1];
 
-$form = "
+require "../src/flash.php";
+$success = flash_success();
+if ($success) {
+    $success = "<h2 style='color: green'>$success</h2>";
+}
+
+$form = $success . "
     <form id='newtodo'>
     <div><label for='todotitle'>Title:</label></div>
     <input type='text' name='todotitle' id='todotitle' value='$todotitle' disabled/>
