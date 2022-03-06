@@ -15,7 +15,7 @@ if ($todotitle && $tododescription) {
 
     require "../src/constants.php";
     // get user_id
-    $connection = pg_connect(constant("CONNECTION_STRING")) or die('Could not connect: ' . pg_last_error());
+    $connection = pg_connect(CONNECTION_STRING) or die('Could not connect: ' . pg_last_error());
     $query = 'SELECT id FROM users WHERE username = $1';
     $params = array($_SESSION['username']);
     $result = pg_query_params($connection, $query, $params) or die('Query failed: ' . pg_last_error());

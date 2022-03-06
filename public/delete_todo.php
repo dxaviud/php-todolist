@@ -17,7 +17,12 @@ require "../src/constants.php";
 $connection = pg_connect(CONNECTION_STRING) or die('Could not connect: ' . pg_last_error());
 $query = 'DELETE FROM todos WHERE id = $1 AND user_id = $2';
 $params = array($todo_id, $user_id);
-pg_query_params($connection, $query, $params) or die('Query failed: ' . pg_last_error());
+$result = pg_query_params($connection, $query, $params) or die('Query failed: ' . pg_last_error());
+$row = pg_fetch_row($result);
+if (!$row || $row[0] === 0) {
+    header("Location: todolist.php");
+    return;
+}
 
 $_SESSION['success'] = "Deleted todo";
 header('Location: todolist.php');
