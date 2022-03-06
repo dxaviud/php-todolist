@@ -58,12 +58,22 @@
     $result = pg_query_params($connection, $query, $params) or die('Query failed: ' . pg_last_error());
     $user_id = pg_fetch_result($result, 0, 'id');
 
-    $query = 'SELECT title FROM todos WHERE user_id = $1';
+    $query = 'SELECT id, title, description FROM todos WHERE user_id = $1';
     $params = array($user_id);
     $result = pg_query_params($connection, $query, $params) or die('Query failed: ' . pg_last_error());
     $todos = array();
     while ($row = pg_fetch_row($result)) {
-        array_push($todos, "<li><a href=''>" . htmlentities($row[0]) . "</a></li>");
+        $titleSnippet = substr($row[1], 0, 40);
+        $titleEllipsis = strlen($row[1]) > 40;
+        $descriptionSnippet = substr($row[2], 0, 30);
+        $descriptionEllipsis = strlen($row[2]) > 30;
+        array_push($todos, 
+            "<li><a href='todo.php?todo_id=$row[0]'>" . 
+            htmlentities($titleSnippet) . 
+            ($titleEllipsis ? "..." : "") . 
+            "</a><span style='margin-left: 20px; float: right; color: gray'>($descriptionSnippet" . 
+            ($descriptionEllipsis ? "..." : "") . 
+            ")</span></li>");
     }
 
     $todolist = implode('', $todos);
@@ -85,7 +95,7 @@
         <li><a href='delete_account.php' style='color: red'>Delete account</a></li>
     </ul>
     <h3>Your todolist:</h3>
-    <ul>
+    <ul style='width: max-content'>
     $todolist
     </ul>";
 
@@ -97,12 +107,12 @@
     $tododescription = isset($_SESSION['tododescription']) ? htmlentities($_SESSION['tododescription']) : '';
 
     $form = $error . "
-    <form method='post' id='newtodoitem'>
+    <form method='post' id='newtodo'>
     <div>Add a new todo:</div>
     <div><label for='todotitle'>Title:</label></div>
     <input type='text' name='todotitle' id='todotitle' value='$todotitle' required/>
     <div><label for='tododescription'>Description:</label></div>
-    <textarea name='tododescription' id='tododescription' form='newtodoitem' rows=6 cols=25 required>$tododescription</textarea>
+    <textarea name='tododescription' id='tododescription' form='newtodo' rows=6 cols=25 required>$tododescription</textarea>
     <input type='submit' />
     </form>";
 
