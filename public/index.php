@@ -1,23 +1,22 @@
 <?php
-    session_start();
-    if (isset($_SESSION['username'])) { // logged in, redirect to todolist
-        header('Location: todolist.php');
-        return;
-    }
+session_start();
+if (isset($_SESSION['username'])) { // logged in, redirect to todolist
+    header('Location: todolist.php');
+    return;
+}
 
-    require '../src/logger.php';
-    log_debug('testing logging');
+require '../src/logger.php';
+log_debug('testing logging');
 
-    $list = '
+$list = '
     <ul>
         <li><a href="./login.php">Login</a></li>
         <li><a href="./signup.php">Sign up</a></li>
     </ul>
     ';
 
-    $form = '';
+$form = '';
 
-    $script = '';
+$script = '';
 
-    require '../templates/base.php';
-?>
+require '../templates/base.php';
