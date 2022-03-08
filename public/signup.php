@@ -54,14 +54,11 @@ if ($error) {
 }
 
 $form = $error . "
-    <form method='post'>
-    <div><label for='username'>Username:</label></div>
-    <input type='text' name='username' id='username' required/>
-    <div><label for='email'>Email:</label></div>
-    <input type='text' name='email' id='email' required/>
-    <div><label for='password'>Password:</label></div>
-    <input type='password' name='password' id='password' required/>
-    <input type='submit' />
+    <form method='post' class='auth'>
+    <input type='text' name='username' id='username' placeholder='username' required/>
+    <input type='text' name='email' id='email' placeholder='email' required/>
+    <input type='password' name='password' id='password' placeholder='password' required/>
+    <input type='submit' value='Sign up' />
     </form>";
 
 $script = '';
