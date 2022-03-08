@@ -34,19 +34,18 @@ if ($todotitle && $tododescription) {
         header('Location: create_todo.php');
         return;
 
-    } else {
-
-        $query = 'INSERT INTO todos (title, description, user_id) VALUES ($1, $2, $3)';
-        $params = array($todotitle, $tododescription, $user_id);
-        $result = pg_query_params($connection, $query, $params) or die('Query failed: ' . pg_last_error());
-        pg_close($connection);
-
-        $_SESSION['success'] = "Todo added successfully!";
-        unset($_SESSION['todotitle']);
-        unset($_SESSION['tododescription']);
-        header("Location: todolist.php");
-        return;
     }
+
+    $query = 'INSERT INTO todos (title, description, user_id) VALUES ($1, $2, $3)';
+    $params = array($todotitle, $tododescription, $user_id);
+    $result = pg_query_params($connection, $query, $params) or die('Query failed: ' . pg_last_error());
+    pg_close($connection);
+
+    $_SESSION['success'] = "Todo added successfully!";
+    unset($_SESSION['todotitle']);
+    unset($_SESSION['tododescription']);
+    header("Location: todolist.php");
+    return;
 }
 
 $list = "
@@ -66,12 +65,11 @@ $tododescription = isset($_SESSION['tododescription']) ? htmlentities($_SESSION[
 
 $form = $error . "
     <form method='post' id='newtodo'>
-    <div>Add a new todo:</div>
     <div><label for='todotitle'>Title:</label></div>
     <input type='text' name='todotitle' id='todotitle' value='$todotitle' required/>
     <div><label for='tododescription'>Description:</label></div>
-    <textarea name='tododescription' id='tododescription' form='newtodo' rows=6 cols=25 required>$tododescription</textarea>
-    <input type='submit' />
+    <textarea name='tododescription' id='tododescription' form='newtodo' required>$tododescription</textarea>
+    <input type='submit' value='Create' />
     </form>";
 
 $script = '';
