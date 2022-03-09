@@ -61,7 +61,7 @@ $list = "
     </ul>";
 
 $form = "
-    <a href='create_todo.php'><button>Create a new todo</button></a>
+    <a href='create_todo.php'><button id='create-todo'>Create a new todo</button></a>
 ";
 
 $script = '';
