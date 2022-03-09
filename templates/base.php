@@ -46,9 +46,9 @@ require_once '../src/constants.php';
       margin-bottom: 1em;
     }
 
-    input:disabled, textarea:disabled {
-      color: var(--dark-color);
-      background-color: var(--light-color);
+    button, input, input:disabled, textarea, textarea:disabled {
+      color: var(--light-color);
+      background-color: var(--dark-color);
     }
 
     textarea {
@@ -58,6 +58,7 @@ require_once '../src/constants.php';
 
     button {
       padding: 0.5em;
+      width: min(90vw, 500px);
     }
 
     ul {
