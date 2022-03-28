@@ -1,8 +1,13 @@
 <?php
-$connection = pg_connect("host=localhost dbname=php-todolist user=postgres password=postgres")
+require_once "../src/logger.php";
+require_once "constants.php";
+
+echo "hello";
+
+$connection = pg_connect(CONNECTION_STRING)
 or die('Could not connect: ' . pg_last_error());
 
-echo "Connected to postgres database\n";
+log_info("Connected to postgres database");
 
 $query = 'CREATE TABLE IF NOT EXISTS users(
         id SERIAL PRIMARY KEY,
@@ -12,7 +17,7 @@ $query = 'CREATE TABLE IF NOT EXISTS users(
     );';
 pg_query($connection, $query) or die('Query failed: ' . pg_last_error());
 
-echo "Created table users\n";
+log_info("Created table users");
 
 $query = 'CREATE TABLE IF NOT EXISTS todos(
         id SERIAL PRIMARY KEY,
@@ -22,6 +27,6 @@ $query = 'CREATE TABLE IF NOT EXISTS todos(
     );';
 pg_query($connection, $query) or die('Query failed: ' . pg_last_error());
 
-echo "Created table todos\n";
+log_info("Created table todos");
 
 pg_close($connection);

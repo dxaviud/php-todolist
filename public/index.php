@@ -1,11 +1,13 @@
 <?php
+require_once "../src/initialize_database.php";
+
 session_start();
 if (isset($_SESSION['username'])) { // logged in, redirect to todolist
     header('Location: todolist.php');
     return;
 }
 
-require '../src/logger.php';
+require_once '../src/logger.php';
 log_debug('testing logging');
 
 $list = '
