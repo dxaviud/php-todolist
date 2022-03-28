@@ -2,8 +2,6 @@
 require_once "../src/logger.php";
 require_once "constants.php";
 
-echo "hello";
-
 $connection = pg_connect(CONNECTION_STRING)
 or die('Could not connect: ' . pg_last_error());
 
