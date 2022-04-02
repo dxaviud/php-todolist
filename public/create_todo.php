@@ -1,7 +1,11 @@
 <?php
+require_once '../src/flash.php';
+require_once "../src/constants.php";
+
 session_start();
-if (!isset($_SESSION['username'])) { // not logged in, redirect to index
-    header("Location: index.php");
+// must be authenticated
+if (!isset($_SESSION['username'])) {
+    header('Location: .');
     return;
 }
 
@@ -13,7 +17,6 @@ if ($todotitle && $tododescription) {
     unset($_SESSION['todotitle']);
     unset($_SESSION['tododescription']);
 
-    require "../src/constants.php";
     // get user_id
     $connection = pg_connect(CONNECTION_STRING) or die('Could not connect: ' . pg_last_error());
     $query = 'SELECT id FROM users WHERE username = $1';
@@ -48,30 +51,10 @@ if ($todotitle && $tododescription) {
     return;
 }
 
-$list = "
-    <ul>
-        <li><a href='todolist.php'>Todolist</a></li>
-    </ul>
-    ";
-
-require '../src/flash.php';
-
 $error = flash_error();
-if ($error) {
-    $error = "<p style='color: red'>" . $error . "</p>";
-}
+
 $todotitle = isset($_SESSION['todotitle']) ? htmlentities($_SESSION['todotitle']) : '';
 $tododescription = isset($_SESSION['tododescription']) ? htmlentities($_SESSION['tododescription']) : '';
 
-$form = $error . "
-    <form method='post' id='newtodo'>
-    <div><label for='todotitle'>Title:</label></div>
-    <input type='text' name='todotitle' id='todotitle' value='$todotitle' required/>
-    <div><label for='tododescription'>Description:</label></div>
-    <textarea name='tododescription' id='tododescription' form='newtodo' required>$tododescription</textarea>
-    <input type='submit' value='Create' />
-    </form>";
-
-$script = '';
-
-require '../templates/base.php';
+$body_template = 'create_todo.php';
+require_once '../templates/base_better.php';

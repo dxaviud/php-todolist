@@ -1,11 +1,13 @@
 <?php
+require_once "../src/constants.php";
+
 session_start();
-if (!isset($_SESSION['username'])) { // not logged in, redirect to index
-    header("Location: index.php");
+// must be authenticated
+if (!isset($_SESSION['username'])) {
+    header('Location: .');
     return;
 }
 
-require "../src/constants.php";
 $connection = pg_connect(CONNECTION_STRING) or die('Could not connect: ' . pg_last_error());
 $query = 'DELETE FROM users WHERE username = $1';
 $params = array($_SESSION['username']);

@@ -1,6 +1,3 @@
-<?php
-require_once '../src/constants.php';
-?>
 <html>
 <head>
   <title>Todolist app</title>
@@ -69,8 +66,6 @@ require_once '../src/constants.php';
 </head>
 <body>
   <h1>Todolist app</h1>
-  <?=$list?>
-  <?=$form?>
-  <?=$script?>
+  <?php require_once __DIR__ . "/$body_template";?>
 </body>
 </html>

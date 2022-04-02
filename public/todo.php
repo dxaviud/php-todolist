@@ -1,11 +1,14 @@
 <?php
+require_once "../src/flash.php";
+require_once "../src/constants.php";
+
 session_start();
-if (!isset($_SESSION['username'])) { // not logged in, redirect to index
-    header("Location: index.php");
+// must be authenticated
+if (!isset($_SESSION['username'])) {
+    header('Location: .');
     return;
 }
 
-require "../src/constants.php";
 // get user_id
 $connection = pg_connect(CONNECTION_STRING) or die('Could not connect: ' . pg_last_error());
 $query = 'SELECT id FROM users WHERE username = $1';
@@ -30,33 +33,10 @@ if (!$todo) {
     return;
 }
 
-$list = "
-    <ul>
-        <li><a href='todolist.php'>Todolist</a></li>
-        <li><a href='edit_todo.php?todo_id=$todo_id'>Edit todo</a></li>
-        <li><a style='color: red' href='delete_todo.php?todo_id=$todo_id'>Delete todo</a></li>
-    </ul>
-    ";
-
 $todotitle = $todo[0];
 $tododescription = $todo[1];
 
-require "../src/flash.php";
 $success = flash_success();
-if ($success) {
-    $success = "<h2 style='color: green'>$success</h2>";
-}
 
-$form = $success . "
-    <form id='newtodo'>
-    <div><label for='todotitle'>Title:</label></div>
-    <input type='text' name='todotitle' id='todotitle' value='$todotitle' disabled/>
-    <div><label for='tododescription'>Description:</label></div>
-    <textarea name='tododescription' id='tododescription' form='newtodo' rows=6 cols=25 disabled>$tododescription</textarea>
-    <br/>
-    </form>";
-// <button href='edit_todo.php?todo_id=$todo_id' style='margin-top: 5px'>Edit</button>
-
-$script = '';
-
-require '../templates/base.php';
+$body_template = 'todo.php';
+require_once '../templates/base_better.php';

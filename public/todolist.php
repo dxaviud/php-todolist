@@ -1,23 +1,20 @@
 <?php
+require_once '../src/flash.php';
+require_once "../src/constants.php";
+
 session_start();
-if (!isset($_SESSION['username'])) { // not logged in, redirect to index
-    header("Location: index.php");
+// must be authenticated
+if (!isset($_SESSION['username'])) {
+    header('Location: .');
     return;
 }
 
-require "../src/constants.php";
 $connection = pg_connect(CONNECTION_STRING) or die('Could not connect: ' . pg_last_error());
 // get user_id
-$user_id;
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-} else {
-    $query = 'SELECT id FROM users WHERE username = $1';
-    $params = array($_SESSION['username']);
-    $result = pg_query_params($connection, $query, $params) or die('Query failed: ' . pg_last_error());
-    $user_id = pg_fetch_result($result, 0, 'id');
-    $_SESSION['user_id'] = $user_id;
-}
+$query = 'SELECT id FROM users WHERE username = $1';
+$params = array($_SESSION['username']);
+$result = pg_query_params($connection, $query, $params) or die('Query failed: ' . pg_last_error());
+$user_id = pg_fetch_result($result, 0, 'id');
 
 $query = 'SELECT id, title, description FROM todos WHERE user_id = $1';
 $params = array($user_id);
@@ -42,28 +39,11 @@ if (!$todolist) {
     $todolist = "<li>You don't have any todos yet. Add one below!</li>";
 }
 
-require '../src/flash.php';
 $success = flash_success();
 if (strlen($success) === 0) {
     $username = htmlentities($_SESSION['username']);
-    $success = "Welcome, $username!";
+    $success = '<h2 style="color: green">Welcome, ' . $username . '!</h2>';
 }
 
-$list = "
-    <h2 style='color: green'>$success</h2>
-    <ul>
-        <li><a href='logout.php'>Logout</a></li>
-        <li><a href='delete_account.php' style='color: red'>Delete account</a></li>
-    </ul>
-    <h3>Your todolist:</h3>
-    <ul style='width: max-content'>
-    $todolist
-    </ul>";
-
-$form = "
-    <a href='create_todo.php'><button id='create-todo'>Create a new todo</button></a>
-";
-
-$script = '';
-
-require '../templates/base.php';
+$body_template = 'todolist.php';
+require_once '../templates/base_better.php';

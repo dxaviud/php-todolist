@@ -3,14 +3,20 @@
 
 function flash_error()
 {
-    $error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
+    if (!isset($_SESSION['error'])) {
+        return '';
+    }
+    $error = $_SESSION['error'];
     unset($_SESSION['error']);
-    return $error;
+    return '<p style="color: red">' . $error . '</p>';
 }
 
 function flash_success()
 {
-    $success = isset($_SESSION['success']) ? $_SESSION['success'] : '';
+    if (!isset($_SESSION['success'])) {
+        return '';
+    }
+    $success = $_SESSION['success'];
     unset($_SESSION['success']);
-    return $success;
+    return '<h2 style="color: green">' . $success . '</h2>';
 }

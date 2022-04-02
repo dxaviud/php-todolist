@@ -1,24 +1,15 @@
 <?php
 require_once "../src/initialize_database.php";
+require_once '../src/logger.php';
 
 session_start();
-if (isset($_SESSION['username'])) { // logged in, redirect to todolist
+// must not be authenticated
+if (isset($_SESSION['username'])) {
     header('Location: todolist.php');
     return;
 }
 
-require_once '../src/logger.php';
 log_debug('testing logging');
 
-$list = '
-    <ul>
-        <li><a href="./login.php">Login</a></li>
-        <li><a href="./signup.php">Sign up</a></li>
-    </ul>
-    ';
-
-$form = '';
-
-$script = '';
-
-require '../templates/base.php';
+$body_template = 'index.php';
+require_once '../templates/base_better.php';

@@ -1,6 +1,10 @@
 <?php
+require_once '../src/flash.php';
+require_once "../src/constants.php";
+
 session_start();
-if (isset($_SESSION['username'])) { // logged in, redirect to todolist
+// must not be authenticated
+if (isset($_SESSION['username'])) {
     header('Location: todolist.php');
     return;
 }
@@ -11,7 +15,6 @@ $password = isset($_POST['password']) ? $_POST['password'] : '';
 if ($username && $password) {
     // attempt login
 
-    require "../src/constants.php";
     $connection = pg_connect(CONNECTION_STRING) or die('Could not connect: ' . pg_last_error());
     $query = 'SELECT password_hash FROM users WHERE username = $1';
     $params = array($username);
@@ -34,25 +37,7 @@ if ($username && $password) {
     }
 }
 
-$list = "
-    <ul>
-        <li><a href='.'>Home</a></li>
-    </ul>
-    ";
-
-require '../src/flash.php';
 $error = flash_error();
-if ($error) {
-    $error = '<p style="color: red">' . $error . '</p>';
-}
 
-$form = $error . "
-    <form method='post' class='auth'>
-    <input type='text' name='username' id='username' placeholder='username' required/>
-    <input type='password' name='password' id='password' placeholder='password' required/>
-    <input type='submit' value='Login' />
-    </form>";
-
-$script = '';
-
-require '../templates/base.php';
+$body_template = 'login.php';
+require_once '../templates/base_better.php';
