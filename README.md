@@ -1,6 +1,7 @@
 # php-todolist
 
-Deployed to AWS Elastic Beanstalk -> [App](http://phptodolist-env-1.eba-7qkqyyb3.us-east-2.elasticbeanstalk.com/)
+<!--Deployed to AWS Elastic Beanstalk -> [App](http://phptodolist-env-1.eba-7qkqyyb3.us-east-2.elasticbeanstalk.com/)
+-->
 
 ## Local development setup
 
